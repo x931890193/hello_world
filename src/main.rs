@@ -1,6 +1,23 @@
+use std::fmt;
 use num::complex::Complex;
 
+struct Person {
+    name: String,
+    age: u8,
+}
 
+
+impl fmt::Display for Person {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{}, {}, rust",
+            self.name, self.age
+        )
+    }
+}
+
+#[warn(unused_mut)]
 fn main() {
     let en = "world hello";
     let ch = "世界 你好👋";
@@ -38,5 +55,11 @@ fn main() {
     let b = Complex::new(2.1, 1.2);
     let result = a + b;
     println!("{} + {}i", result.re, result.im);
+    // 测试实现Display特征
+    let p = Person {
+        name: "test".to_string(),
+        age: 18,
+    };
+    println!("{}", p);
 
 }
