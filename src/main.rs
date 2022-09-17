@@ -63,3 +63,81 @@ fn main() {
     println!("{}", p);
 
 }
+
+fn test() {
+    let s = String::from("Hello World");
+    let hello = &s[..5]; // &s[0..5]
+    let world = &s[6..]; // &s[..11]
+    let hello_world = &s[..];
+    // 语法🍬
+    println!("{}{} {}", hello, world, hello_world)
+}
+
+// 寻找第一个单词
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i
+        }
+    }
+    return s.len()
+
+}
+
+fn first_word_v2(s: &String) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i]
+        }
+    }
+    return &s
+}
+
+fn first_word_v3(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i]
+        }
+    }
+    return &s
+}
+
+// 数组切片
+fn arr_slice() {
+    let arr = [1, 2, 3, 4, 5];
+    let slice = &arr[1..]; //
+}
+
+// struct
+fn test_struct (){
+    struct User {
+        user_name: String,
+        email: String,
+        age: i32,
+    }
+    let mut user = User {
+        user_name: String::from("test"),
+        email: String::from("@aaa"),
+        age: 11,
+    };
+    println!("{}", user.user_name);
+    user.user_name = String::from("change")
+
+}
+
+
+// tuple struct 元组结构体， 未命名结构体， 匿名结构体 命名元组
+fn tuple_struct(){
+    struct Color(i32, i32, i32);
+    struct Point(i32, i32, i32);
+    let black = Color(0, 0,0);
+}
+// unit_like struct
+
+fn unit_like_struct() {
+
+}
+
