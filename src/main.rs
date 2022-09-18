@@ -1,8 +1,9 @@
+use std::cmp::Ordering;
 use std::fmt;
 use num::complex::Complex;
 
 struct Person {
-    name: String,
+    name: String, // &str
     age: u8,
 }
 
@@ -21,8 +22,8 @@ impl fmt::Display for Person {
 fn main() {
     let en = "world hello";
     let ch = "世界 你好👋";
-    let regions = [ch, en];
-    for region in regions.iter() {
+    let regions = [ch, en]; // 数组
+    for (i, &region) in regions.iter().enumerate() {
     // for region in regions {
         println!("{}", region);
 
@@ -57,11 +58,13 @@ fn main() {
     println!("{} + {}i", result.re, result.im);
     // 测试实现Display特征
     let p = Person {
-        name: "test".to_string(),
+        name: String::from("test"), // "test".to_string(),
         age: 18,
     };
     println!("{}", p);
 
+    vec_test();
+    test_count_iter()
 }
 
 fn test() {
@@ -138,6 +141,63 @@ fn tuple_struct(){
 // unit_like struct
 
 fn unit_like_struct() {
+    struct Test;
+    let t = Test;
+}
 
+// Vec
+fn vec_test() {
+    let mut v1: Vec<i32> = Vec::new();
+    let mut v2 = vec![1, 2, 3];
+    v1.push(1);
+    v1.push(2);
+    v2.push(2);
+    let mut v3 : Vec<i32> = Vec::new();
+    v3.push(2);
+    let first = &v3[0];
+
+    // get index not get value
+    if let Some(first) = v3.get(0) {
+        println!("this is {}", first)
+    }
+    // get index not get value
+    match v3.get(0) {
+        Some(first) => println!("this is {}", first),
+        None => (),
+    }
+}
+
+struct Counter {
+    count: u32,
+}
+
+// 自定义迭代器
+impl Counter {
+    // 关联函数
+    fn new() -> Counter {
+        Counter{count: 0}
+    }
+}
+
+// 实现Iterator trait
+impl Iterator for Counter {
+    type Item = u32;
+    // 实现next 方法
+    fn next(&mut self) -> Option<Self::Item> {
+        self.count += 1;
+        if self.count < 100 {
+            Some(self.count)
+        }else {
+            None
+        }
+    }
+}
+
+fn test_count_iter() {
+    let mut count = Counter::new();
+    // for 循环遍历
+    for c in count{
+        println!("{}", c)
+    }
 }
 
