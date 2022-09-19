@@ -1,5 +1,7 @@
+use std::cell::Ref;
 use std::cmp::Ordering;
 use std::fmt;
+use std::rc::Rc;
 use num::complex::Complex;
 
 struct Person {
@@ -64,7 +66,10 @@ fn main() {
     println!("{}", p);
 
     vec_test();
-    test_count_iter()
+    test_count_iter();
+    assert_eq!(5, sum(2i8, 3i8));
+    assert_eq!(50, sum(20, 30));
+    assert_eq!(2.46, sum(1.23, 1.23));
 }
 
 fn test() {
@@ -199,5 +204,29 @@ fn test_count_iter() {
     for c in count{
         println!("{}", c)
     }
+}
+
+enum MyOption<T> {
+    Some(T),
+    None,
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+
+fn test3() -> usize {
+    let a = Rc::new("ss");
+    Rc::strong_count(&a)
+}
+
+fn sum<T>(x: T, y: T) -> T
+    where
+        T: std::ops::Add<Output = T>,
+{
+
+    x + y
 }
 
